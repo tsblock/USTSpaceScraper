@@ -6,21 +6,20 @@ import os
 import requests
 from bs4 import BeautifulSoup
 from dotenv import dotenv_values
-from ratelimit import limits
+from ratelimit import limits, sleep_and_retry
 
 
 # Network stuff
 BASE_URL = "https://ust.space"
 USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:122.0) Gecko/20100101 Firefox/122.0"
 HEADERS = {
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,*/*;q=0.8",
-    "Content-Type": "application/x-www-form-urlencoded",
+    "Accept": "*/*",
     "User-Agent": USER_AGENT
 }
 
 # Rate limits
-CALLS = 20
-PER_PERIOD = 60
+CALLS = 30
+PER_PERIOD = 15
 
 login_details = dotenv_values(".env")
 
@@ -86,12 +85,13 @@ def get_courses_in_subject(subject: str) -> list[str]:
 
 
 # Eventually this will be the output files
+@sleep_and_retry
 @limits(calls=CALLS, period=PER_PERIOD)
 def get_course_reviews(course: str) -> list[dict]:
     params = {
         "single": "false",
         "composer": "false",
-        "preferences[sort]": 0,
+        "preferences[sort]": 1,  # sort by post date
         "preferences[filterSemester]": 0,
         "preferences[filterRating]": 0,
     }
