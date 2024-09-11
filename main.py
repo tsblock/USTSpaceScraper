@@ -1,5 +1,3 @@
-import time
-import random
 import json
 import os
 
@@ -7,7 +5,6 @@ import requests
 from bs4 import BeautifulSoup
 from dotenv import dotenv_values
 from ratelimit import limits, sleep_and_retry
-
 
 # Network stuff
 BASE_URL = "https://ust.space"
@@ -109,6 +106,7 @@ def dump():
         print(f"Walking through {subject}...")
         for course in courses:
             reviews = get_course_reviews(course)
+
             # need to create directories first...
             filename = f"output/{subject}/{course}.json"
             os.makedirs(os.path.dirname(filename), exist_ok=True)
