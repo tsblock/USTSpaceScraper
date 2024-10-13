@@ -1,4 +1,4 @@
+# DISCLAIMER
+***I am not responsible if your account is banned from using this tool. This is for educational purposes only.***
 # UST.space scraper
-Because [ust.space](https://ust.space) seems to be unmaintained, there's a risk that it could be shut down at any moment. So I guess it's up to us current students to deal with this situation.
-
-More info will be added here when basic scraping is implemented
+A quick tool to get all course reviews on ust.space, outputs raw JSON files from the site's internal API.
